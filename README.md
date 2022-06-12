@@ -1,5 +1,5 @@
 # Detecting license plates in car images
-
+Created by Wojciech Mańczak, Dawid Makałowski, Marcin Narożny 
 # Introduction
 
 The purpose of this project is to develop software that allows the detection of
@@ -103,4 +103,4 @@ Labeling), it was left to blob detection.
 
 
 
-Translated with www.DeepL.com/Translator (free version)
+
