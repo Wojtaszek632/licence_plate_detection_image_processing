@@ -3,7 +3,8 @@ Created by Wojciech Mańczak, Dawid Makałowski, Marcin Narożny
 # Introduction
 
 The purpose of this project is to develop software that allows the detection of
-European single row license plate. The following requirements have been imposed on the project
+European single row license plate without using any external libraries, only pure image procesing.
+The following requirements have been imposed on the project
 the following requirements have been imposed: The input and
 input and output formats for the programs should be PPM or PGM images.
 The code should be in C. Without using any external libraries. Demonstration of running
