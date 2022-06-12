@@ -1,132 +1,103 @@
-# licence_plate_detection_wk_pp
-%++++++++++++++++++++++++++++++++++++++++
-% Don't modify this section unless you know what you're doing!
-\documentclass[letterpaper,12pt]{article}
-\usepackage{polski}
+# Wykrywanie tablic rejestracyjnych na zdjęciach samochodów
 
-\usepackage{tabularx} % extra features for tabular environment
-\usepackage{amsmath}  % improve math presentation
-\usepackage{graphicx} % takes care of graphic including machinery
-\usepackage[margin=1in,letterpaper]{geometry} % decreases margins
-\usepackage{cite} % takes care of citations
-\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
-\hypersetup{
-	colorlinks=true,       % false: boxed links; true: colored links
-	linkcolor=blue,        % color of internal links
-	citecolor=blue,        % color of links to bibliography
-	filecolor=magenta,     % color of file links
-	urlcolor=blue         
-}
-%++++++++++++++++++++++++++++++++++++++++
+# Wstęp
 
+Celem projektu jest stworzenie oprogramowania pozwalającego na wykrycie
+europejskiej tablicy rejestracyjnej zwyczajnej jednorzędowej. Na projekt
+zostały nałożone następujące wymagania: Formatem wejściowym oraz
+wyjściowym dla programów powinny być obrazki w formacie PPM lub PGM.
+Kod w C. Bez użycia zewnętrznych bibliotek. Demonstracja działania
+programu na płycie Raspberry PI 3 w trakcie zajęć.
 
-\begin{document}
-\title{Dokumentacja projektu - Widzenie komputerowe}
-\author{Wojciech Mańczak 141083\\
-Dawid Makałowski 141270\\
-Marcin Narożny 141089}
-\date{\today}
-\maketitle
+# Wykorzystane oprogramowanie
 
-\begin{center}
-   \section*{\large Wykrywanie tablic rejestracyjnych na zdjęciach samochodów} 
-\end{center}
+Do stworzenia projektu użyto edytora Visual Studio Code w wersji 1.68
+oraz kompilatora gcc version 9.2.0 (GCC). Do podglądu zdjęć w formacie
+ppm użyto IrfanViev, natomiast to podglądu binarnych wartości plików
+użyto Notepad++ wraz z pluginem Hexeditor.
 
+# Użyte algorytmy
 
-
-
-\section{Wstęp}
-
-Celem projektu jest stworzenie oprogramowania pozwalającego na wykrycie europejskiej tablicy rejestracyjnej zwyczajnej jednorzędowej. Na projekt zostały nałożone następujące wymagania: Formatem wejściowym oraz wyjściowym dla programów powinny być obrazki w formacie PPM lub PGM. Kod w C. Bez użycia zewnętrznych bibliotek. Demonstracja działania programu na płycie Raspberry PI 3 w trakcie zajęć.
-
-\section{Wykorzystane oprogramowanie}
-Do stworzenia projektu użyto edytora Visual Studio Code w wersji 1.68 oraz kompilatora gcc version 9.2.0 (GCC). Do podglądu zdjęć w formacie ppm użyto IrfanViev, natomiast to podglądu binarnych wartości plików użyto Notepad++ wraz z pluginem Hexeditor.
-
-
-\section{Użyte algorytmy}
 W celu detekcji tablic użyo następujące algorytmy:
-\begin{enumerate}
-  \item Przekształcenie obrazu na skalę szarości poprzez wyciągnięcie średniej ze składowych R G B,
-  \item Normalizacja histogramu zgodnie z algorytmem 5.1 z zajęć,
-  \item Binaryzacja obrazu poprzez metodę Otsu, oraz przez stałą wartość progową,
-  \item Konwolucja obrazu,
-  \item Detekcja krawędzi przy pomocy operatora Sobel,
-  \item Modyfikacja obrazu poprzez dylatację,
-  \item Wykrywanie skupisk - Blob detection algorythm,
-\end{enumerate}
 
-\pagebreak
+1.  Przekształcenie obrazu na skalę szarości poprzez wyciągnięcie
+    średniej ze składowych R G B,
 
-\section{Sposób działania}
-Parametrem wejściowym programu jest obraz w formacie ppm o wymiarach zbliżonym do 500 na 500. 
-Zdjęcie takie może zostać pozyskane w internecie, zmniejszone do porządnego wymiaru, oraz przekonwertowane na format ppm. Ważnym elementem jest usunięcie wszelkich komentarzy w pliku ppm, które niektóre internetowe konwertery dodają do nagłówka zdjęcia.
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{in.jpg}
-    \caption{Zdjęcie wejściowe}
-\end{figure}
+2.  Normalizacja histogramu zgodnie z algorytmem 5.1 z zajęć,
 
-Kolejnym etapem jest stworzenie kopii tego zdjęcia w skali szarości. Uzyskujemy to poprzez wyciągniecie średniej wartości składowych R G B wchodzących w skład jednego pixela. Zdjęcie to następnie jest zapisywane pod nazwą grayscaled.ppm.
+3.  Binaryzacja obrazu poprzez metodę Otsu, oraz przez stałą wartość
+    progową,
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{gray.jpg}
-    \caption{Zdjęcie w skali szarości}
-\end{figure}
+4.  Konwolucja obrazu,
 
-\pagebreak
+5.  Detekcja krawędzi przy pomocy operatora Sobel,
 
-Po wykonaniu tej czynności, dokonujemy wyrównania histogramu, a następnie binaryzujemy nasz obraz. Na początku, do tego celu używaliśmy algorytmu Otsu, jednak w trakcie testów okazało się, że sztywna wartość wykazywała lepsze rezultaty. Zdjęcie po binaryzacji zapisywane jest jako tresholded.pgm
+6.  Modyfikacja obrazu poprzez dylatację,
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{bin.jpg}
-    \caption{Obraz po binearyzacji}
-\end{figure}
+7.  Wykrywanie skupisk - Blob detection algorythm,
 
-Po wykonaniu binearyzacji, przechodzimy do wykrywania krawędzi przy użyciu operatora sobla. Obraz wynikowy zapisywany jest jako edge.pgm.
+# Sposób działania
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{sobel.jpg}
-    \caption{Wykryte krawędzie}
-\end{figure}
+Parametrem wejściowym programu jest obraz w formacie ppm o wymiarach
+zbliżonym do 500 na 500. Zdjęcie takie może zostać pozyskane w
+internecie, zmniejszone do porządnego wymiaru, oraz przekonwertowane na
+format ppm. Ważnym elementem jest usunięcie wszelkich komentarzy w pliku
+ppm, które niektóre internetowe konwertery dodają do nagłówka zdjęcia.
 
-\pagebreak 
+![Zdjęcie wejściowe]![in](https://user-images.githubusercontent.com/69490354/173242459-ddd5eeda-d723-40f4-9bc4-f9defa74b182.jpg)
 
-Następnie wykonujemy dylatację obrazu. Powtarzamy ten etap kilka razy aby wykryte krawędzie utworzyły skupisko białych pikseli. W naszych testach odpowiednia ilość powtórzeń wynosi co najmniej 6. Obraz po dylatacji zapisywany jest jako dialeted.pgm.
+Kolejnym etapem jest stworzenie kopii tego zdjęcia w skali szarości.
+Uzyskujemy to poprzez wyciągniecie średniej wartości składowych R G B
+wchodzących w skład jednego pixela. Zdjęcie to następnie jest zapisywane
+pod nazwą grayscaled.ppm.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{dial.jpg}
-    \caption{6 krotna dylatacja}
-\end{figure}
-
-Ostatnim etapem jest detekcja tak zwanych blobów, oraz wycięcie interesującego nasz obszaru. Etap ten polega on obliczaniu odległości białych pikseli od wcześniej znalezionych już skupisk. Jeżeli ich odległość jest mniejsza niż zadany treshold ( 94 piksele), piksel dołączany jest to wcześniej znalezionego już bloba. Po przebadaniu całego obszaru, szukamy takiego bloba, który swoimi proporcjami przypomina tablice rejestracyjną (4.5 długości do 1 wysokości) i wycina ten obszar. Etap ten jest najbardziej czuły na zakłócenia, dlatego jego sprawność jest narażona na niedopatrzenia wynikające ze wcześniejszych kroków.
-Zlokalizowana tablica zapisywana jest jako crop.pgm.
+![Zdjęcie w skali szarości]![gray](https://user-images.githubusercontent.com/69490354/173242479-275c5eeb-373e-4749-bec1-9eed90117be6.jpg)
 
 
+Po wykonaniu tej czynności, dokonujemy wyrównania histogramu, a
+następnie binaryzujemy nasz obraz. Na początku, do tego celu używaliśmy
+algorytmu Otsu, jednak w trakcie testów okazało się, że sztywna wartość
+wykazywała lepsze rezultaty. Zdjęcie po binaryzacji zapisywane jest jako
+tresholded.pgm
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{crop.jpg}
-    \caption{Zlokalizowana i wycięta tablica.}
-\end{figure}
-
-
-
-
-\section{Pomysły na rozwój}
-Zmianami które wymagają przepadania jest detekcja krawędzi. Operator sobla działa poprawnie, jednak rodzi się pytanie czy użycie de tego celu algorytmu canny'ego nie będzie lepszym rozwiązaniem. Ze względu na dobre wyniki, pierwsza wersja projektu pozostaje przy operatorze sobla. Kolejnym polem do poprawy jest detekcja blobów. Potencjalnie lepszym rozwiązaniem było by wykrywanie zamkniętych obszarów, a następnie ich filtracja na podstawie rozmiaru, położenia, proporcji. Ze względu na złożoność algorytmu wykrywania takich obszarów (Connected Component Labeling) pozostano przy detekcji blobów.
+![Obraz po binearyzacji]![bin](https://user-images.githubusercontent.com/69490354/173242488-cdf81ed2-e1bb-45fa-81df-dae797e899ce.jpg)
 
 
+Po wykonaniu binearyzacji, przechodzimy do wykrywania krawędzi przy
+użyciu operatora sobla. Obraz wynikowy zapisywany jest jako edge.pgm.
 
+![Wykryte krawędzie]![sobel](https://user-images.githubusercontent.com/69490354/173242495-bb793f04-8a3d-4f2c-8e64-a363c20cdb21.jpg)
 
-\end{document}
+Następnie wykonujemy dylatację obrazu. Powtarzamy ten etap kilka razy
+aby wykryte krawędzie utworzyły skupisko białych pikseli. W naszych
+testach odpowiednia ilość powtórzeń wynosi co najmniej 6. Obraz po
+dylatacji zapisywany jest jako dialeted.pgm.
 
+![6 krotna dylatacja]![dial](https://user-images.githubusercontent.com/69490354/173242505-7d248e5a-738c-4d44-8907-f34ad00d08e9.jpg)
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{in.jpg}
-    \caption{Kinematyka prosta}
-\end{figure}
+Ostatnim etapem jest detekcja tak zwanych blobów, oraz wycięcie
+interesującego nasz obszaru. Etap ten polega on obliczaniu odległości
+białych pikseli od wcześniej znalezionych już skupisk. Jeżeli ich
+odległość jest mniejsza niż zadany treshold ( 94 piksele), piksel
+dołączany jest to wcześniej znalezionego już bloba. Po przebadaniu
+całego obszaru, szukamy takiego bloba, który swoimi proporcjami
+przypomina tablice rejestracyjną (4.5 długości do 1 wysokości) i wycina
+ten obszar. Etap ten jest najbardziej czuły na zakłócenia, dlatego jego
+sprawność jest narażona na niedopatrzenia wynikające ze wcześniejszych
+kroków. Zlokalizowana tablica zapisywana jest jako crop.pgm.
+
+![Zlokalizowana i wycięta tablica.]![crop](https://user-images.githubusercontent.com/69490354/173242518-ec9b1207-42cd-4aa5-a761-292399dc84a3.jpg)
+
+# Pomysły na rozwój
+
+Zmianami które wymagają przepadania jest detekcja krawędzi. Operator
+sobla działa poprawnie, jednak rodzi się pytanie czy użycie de tego celu
+algorytmu canny’ego nie będzie lepszym rozwiązaniem. Ze względu na dobre
+wyniki, pierwsza wersja projektu pozostaje przy operatorze sobla.
+Kolejnym polem do poprawy jest detekcja blobów. Potencjalnie lepszym
+rozwiązaniem było by wykrywanie zamkniętych obszarów, a następnie ich
+filtracja na podstawie rozmiaru, położenia, proporcji. Ze względu na
+złożoność algorytmu wykrywania takich obszarów (Connected Component
+Labeling) pozostano przy detekcji blobów.
+
+![Kinematyka prosta](in.jpg)
