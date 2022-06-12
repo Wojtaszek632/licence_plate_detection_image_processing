@@ -1,4 +1,4 @@
-# Detecting license plates in car images
+# Detecting licence plates in car images
 Created by Wojciech Mańczak, Dawid Makałowski, Marcin Narożny 
 # Introduction
 
