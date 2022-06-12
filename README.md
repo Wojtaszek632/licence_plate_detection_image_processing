@@ -44,7 +44,7 @@ internecie, zmniejszone do porządnego wymiaru, oraz przekonwertowane na
 format ppm. Ważnym elementem jest usunięcie wszelkich komentarzy w pliku
 ppm, które niektóre internetowe konwertery dodają do nagłówka zdjęcia.
 
-[in](https://user-images.githubusercontent.com/69490354/173242459-ddd5eeda-d723-40f4-9bc4-f9defa74b182.jpg)
+![in](https://user-images.githubusercontent.com/69490354/173242459-ddd5eeda-d723-40f4-9bc4-f9defa74b182.jpg)
 
 Kolejnym etapem jest stworzenie kopii tego zdjęcia w skali szarości.
 Uzyskujemy to poprzez wyciągniecie średniej wartości składowych R G B
