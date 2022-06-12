@@ -1,0 +1,2 @@
+ sudo gcc main.c -o main -lm
+./main sod3.ppm
