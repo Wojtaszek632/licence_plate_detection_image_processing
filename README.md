@@ -11,8 +11,7 @@ Run with: ./main FILENAME.ppm
 
 The purpose of this project is to develop software that allows the detection of
 European single row license plate without using any external libraries, only pure image procesing.
-The following requirements have been imposed on the project
-the following requirements have been imposed: The input and
+The following requirements have been imposed on the project: The input and
 input and output formats for the programs should be PPM or PGM images.
 The code should be in C. Without using any external libraries. Demonstration of running
 program on a Raspberry PI 3 board during the class.
@@ -28,21 +27,14 @@ binary file values Notepad++ with Hexeditor plugin was used.
 
 The following algorithms were used for array detection:
 
-1. converting the image to grayscale by extracting the
-    1. convert the image to grayscale by extracting the average of the R G B components,
-
-2. normalize the histogram according to algorithm 5.1 from the class,
-
-Binarization of the image through the Otsu method, and through a fixed
-    threshold value,
-
-4. image convolution,
-
-5. edge detection using Sobel operator,
-
-Image modification by dilation,
-
-Blob detection algorythm,
+1. converting the image to grayscale by extracting the  
+2. convert the image to grayscale by extracting the average of the R G B components,  
+3. normalize the histogram according to algorithm 5.1 from the class,  
+4.Binarization of the image through the Otsu method, and through a fixed threshold value,  
+5. image convolution,  
+6. edge detection using Sobel operator,  
+7.Image modification by dilation,  
+8.Blob detection algorythm,  
 
 # Method of operation
 
