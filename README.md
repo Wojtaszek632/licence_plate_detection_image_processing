@@ -1,7 +1,11 @@
 # Detecting licence plates in car images without external libraries
-
+PC
 Compile with: gcc main.c -o main
 Run with: main FILENAME.ppm
+
+RaspberryPI:
+Compile with:  sudo gcc main.c -o main -lm
+Run with: ./main FILENAME.ppm
 
 # Introduction
 
